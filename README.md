@@ -16,4 +16,5 @@ npm install @react-navigation/stack
 npm install react-native-screens react-native-safe-area-context
 npx expo install react-native-screens react-native-safe-area-context
 npm install @react-navigation/bottom-tabs
+npm install @rneui/themed @rneui/base
 ```

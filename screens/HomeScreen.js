@@ -10,7 +10,8 @@ export default HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.body}>
             <Text>HomeScreen</Text>
-            <Button title="Create" onPress={() => navigation.navigate("Input")} />
+            <Button title="Create" onPress={() => navigation.navigate("Input")} 
+            />
 
             <StatusBar style="auto" />
         </View>

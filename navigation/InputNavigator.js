@@ -8,6 +8,7 @@ import { styles } from "../Styles";
 const InputStack = createStackNavigator();
 
 export default InputNavigator = () => {
+
   return (
     <InputStack.Navigator initialRouteName="Input" screenOptions={styles.header}>
         <InputStack.Screen name="Input" component={InputScreen} options={{headerTitle: 'Create'}}/>

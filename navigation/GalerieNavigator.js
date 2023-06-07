@@ -8,7 +8,7 @@ const GalerieStack = createStackNavigator();
 export default GalerieNavigator = () => {
   return (
     <GalerieStack.Navigator initialRouteName="Galerie" screenOptions={styles.header}>
-      <GalerieStack.Screen name="Galerie" component={GalerieScreen} options={{headerTitle: 'Galerie'}}/>
+      <GalerieStack.Screen name="Galerie" component={GalerieScreen} options={{headerTitle: 'Gallery'}}/>
     </GalerieStack.Navigator>
   );
 };

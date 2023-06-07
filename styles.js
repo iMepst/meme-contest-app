@@ -2,8 +2,20 @@ import { StyleSheet } from 'react-native';
 
 const backgroundColor = "#D8C4B6";
 const textColor = "#213555"
+const headerFontSize = 36;
+const tabBarActiveColor= '#1A72FF';
+const tabBarInactiveColor= "#D8C4B6";
+const shadowColor = "#2A313C";
+const tabBarButton = "#FF471A";
 
 export const styles = StyleSheet.create({
+    backgroundColor: backgroundColor,
+    textColor: textColor,
+    headerFontSize: headerFontSize,
+    tabBarActiveColor: tabBarActiveColor,
+    tabBarInactiveColor: tabBarInactiveColor,
+    shadowColor: shadowColor,
+    tabBarButton: tabBarButton, 
     body: {
       flex: 1,
       backgroundColor: backgroundColor,
@@ -39,9 +51,37 @@ export const styles = StyleSheet.create({
           shadowColor: 'transparent',
         },
         headerTitleStyle: {
-          fontSize: 32,
+          fontSize: headerFontSize,
           fontWeight: 'bold',
           color: textColor,
         },
+      },
+      headerBackButton: {
+        color: textColor,
+        marginRight: -10,
+        marginLeft: -4,
+      },
+      tabBar: {
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 25,
+          left: 15,
+          right: 15,
+          elevation: 0,
+          backgroundColor: textColor,
+          borderRadius: 15,
+          height: 80,
+          
+        shadowColor: shadowColor,
+          shadowOffset: {
+            width: 0, 
+            height: 10,
+          },
+          shadowOpacity: 0.4,
+          shadowRadius: 3.5,
+          elevation: 5,
+        }
       },
   });
