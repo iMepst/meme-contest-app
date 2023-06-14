@@ -21,7 +21,7 @@ export default MainNavigator = () => {
             return <Ionicons name={'ios-home'} size={42} color={color} style={{alignItems: "center", justifyContent: "center", top: 12}} />
           }
         }}/>
-        <Tab.Screen name="CreateScreen" component={InputNavigator} options={{
+        <Tab.Screen name="InputScreen" component={InputNavigator} options={{
           tabBarIcon: ({ focused, color, size }) => {
             color = styles.tabBarButton;
             return <Ionicons name={'ios-add-circle'} size={80} color={color} style={{alignItems: "center", justifyContent: "center", bottom: 20, marginBottom: -30}} />

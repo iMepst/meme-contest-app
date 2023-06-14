@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, Alert } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { styles } from "../Styles";
+import { Button } from "@rneui/themed";
 //import { ImageContext } from "../data/ImageContext";
 
 
@@ -10,9 +11,8 @@ export default HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.body}>
             <Text>HomeScreen</Text>
-            <Button title="Create" onPress={() => navigation.navigate("Input")} 
+            <Button title="Create" onPress={() => navigation.navigate('InputScreen', { screen: 'Input' })}
             />
-
             <StatusBar style="auto" />
         </View>
     );
