@@ -9,6 +9,7 @@ const tabBarInactiveColor= "#D8C4B6";
 const shadowColor = "#2A313C";
 const tabBarButton = "#FF471A";
 
+
 export const styles = StyleSheet.create({
     backgroundColor: backgroundColor,
     buttonBackground: buttonBackground,
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
     tabBarActiveColor: tabBarActiveColor,
     tabBarInactiveColor: tabBarInactiveColor,
     shadowColor: shadowColor,
-    tabBarButton: tabBarButton, 
+    tabBarButton: tabBarButton,
     body: {
       flex: 1,
       backgroundColor: backgroundColor,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
         textColor: textColor,
       },
       headerStyle: {
-        height: 110, 
+        height: 110,
         backgroundColor: backgroundColor,
         shadowColor: 'transparent',
       },
@@ -58,10 +59,10 @@ export const styles = StyleSheet.create({
         backgroundColor: textColor,
         borderRadius: 15,
         height: 80,
-          
+
       shadowColor: shadowColor,
         shadowOffset: {
-          width: 0, 
+          width: 0,
           height: 10,
         },
         shadowOpacity: 0.4,
@@ -130,7 +131,7 @@ export const styles = StyleSheet.create({
       top: "28%",
       paddingBottom: "50%",
       width: "93%",
-      borderRadius: 20, 
+      borderRadius: 20,
       //backgroundColor: "black",
     },
     shutterButton: {
@@ -145,7 +146,7 @@ export const styles = StyleSheet.create({
     },
     cameraContainer: {
       flex: 1,
-      borderRadius: 20, 
+      borderRadius: 20,
       overflow: "hidden",
     },
     cameraPreview: {
