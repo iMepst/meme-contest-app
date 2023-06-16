@@ -151,5 +151,12 @@ export const styles = StyleSheet.create({
     },
     cameraPreview: {
       flex: 1,
+    },
+    textInput: {
+      width: "100%",
+      height: 50,
+      fontSize: headerFontSize,
+      textAlign: "center",
+
     }
   });

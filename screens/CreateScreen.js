@@ -1,11 +1,14 @@
-import React, {useLayoutEffect} from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import React, {useLayoutEffect, useState} from 'react';
+import {StyleSheet, TextInput, View} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
-import { Button } from "@rneui/themed";
+import {Button, Image} from "@rneui/themed";
 
 export default CreateScreen = ({route, navigation}) => {
+
+  const selectedImage = route.params.selectedImage;
+  const [topText, setTopText] = useState("");
+  const [bottomText, setBottomText] = useState("");
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,10 +26,39 @@ export default CreateScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.body}>
-        <Text>CreateScreen</Text>
-        <Button title="Generate" onPress={() => navigation.navigate("Result")} />
-
-        <StatusBar style="auto" />
+      <View style={style.topContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Top text"
+          onChangeText={ val => setTopText(val)}
+          value={topText}
+        />
+        <Image
+          source={{uri: selectedImage.localUri }}
+          style={[styles.imagePreview]}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Bottom text"
+          onChangeText={ val => setBottomText(val)}
+          value={bottomText}
+        />
+      </View>
+      <View style={style.bottomContainer}>
+        <Button
+          title="Create"
+          onPress={() => navigation.navigate("Result", {selectedImage, topText, bottomText})}
+        />
+      </View>
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  topContainer: {
+    height: "60%"
+  },
+  bottomContainer: {
+    height: "30%"
+  },
+})

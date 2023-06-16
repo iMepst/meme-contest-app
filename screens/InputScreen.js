@@ -67,7 +67,7 @@ export default InputScreen = ({route, navigation}) => {
   onPictureSaved = photo => {
     //console.log(photo.uri);
     setSelectedImage({ localUri: photo.uri });
-    setModalVisible(false); 
+    setModalVisible(false);
     toggleCameraHandler();
   };
 
@@ -89,8 +89,8 @@ export default InputScreen = ({route, navigation}) => {
             </Text>
             ) : (
             <TouchableOpacity style={styles.cameraContainer} onPress={flipCameraHandler}>
-              <Camera 
-                style={styles.cameraPreview} 
+              <Camera
+                style={styles.cameraPreview}
                 type={type}
                 ref={(ref) => { this.camera = ref }}
                 />
@@ -122,7 +122,14 @@ export default InputScreen = ({route, navigation}) => {
             </View>
 
             <View style={[{flex: 1}]}>
-            <TouchableOpacity onPress={() => null}>
+            <TouchableOpacity onPress={ async () => {
+              let response = await fetch("https://api.api-ninjas.com/v1/randomimage", {
+                method: "GET",
+                headers: { 'X-Api-Key': 'oQ43vak79Th9fR5U30MKpw==JBXrbin3Nm66FYgn', 'Accept': 'image/jpg'},
+              });
+              console.log(response)
+
+            }}>
               <Text style={{ textAlign: "center" }}>
                   Random image
               </Text>
@@ -152,7 +159,7 @@ export default InputScreen = ({route, navigation}) => {
         </View>
       </View>
       <View style={styles.inputlower}>
-        <Button title="Confirm" onPress={() => navigation.navigate("Create")} />
+        <Button title="Confirm" onPress={() => navigation.navigate("Create", {selectedImage: selectedImage })} />
       </View>
 
 
