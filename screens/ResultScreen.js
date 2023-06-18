@@ -1,10 +1,10 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, Alert, Platform, ImageBase} from 'react-native';
+import {Text, View, ActivityIndicator} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
-import apiKey from "../ApiKey";
+import {memeGen} from "../ApiKey";
 
 export default ResultScreen = ({route, navigation}) => {
 
@@ -25,23 +25,22 @@ export default ResultScreen = ({route, navigation}) => {
       type: "image/jpg",
       uri: selectedImage.localUri.replace("file://", ""),
     });
-    console.log(data)
+    //console.log(data)
 
     try {
       let response = await fetch("https://memebuild.com/api/1.0/generateMeme", {
         method: "POST",
         headers: {
-          "API-KEY": apiKey,
+          "API-KEY": memeGen,
           "Content-Type": "multipart/form-data",
         },
         body: data,
       });
-      //console.log("RESPONSE: ",response);
-      response = await response.json();
-      if (response.cod < 400) {
+      if (response.ok) {
+        response = await response.json();
         setMeme(response.url);
       }
-      console.log(response);
+      console.log(response.url);
     } catch (err) {
       console.error(err);
     }
@@ -67,10 +66,14 @@ export default ResultScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.body}>
-      <Image
+      {meme === null ? (
+        <ActivityIndicator size="large" color={styles.tabBarButton}/>
+      ) : (
+        <Image
         source={{ uri: meme }}
         style={styles.imagePreview}
       />
+      )}
     </View>
   );
 }

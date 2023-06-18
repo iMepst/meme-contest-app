@@ -103,13 +103,13 @@ export const styles = StyleSheet.create({
       shadowColor: "black",
       shadowOpacity: 0.2,
       shadowOffset: { width: 0, height: 2 },
-      shadowRadius: 20,
-      borderRadius: 20,
+      shadowRadius: 16,
+      borderRadius: 16,
       padding: 0,
       backgroundColor: buttonBackground,
       alignItems: "center",
       justifyContent: "center",
-      //arginBottom: 30,
+      //marginBottom: 30,
     },
     imageSelectPreview: {
       width: "80%",
@@ -163,5 +163,20 @@ export const styles = StyleSheet.create({
       fontSize: headerFontSize,
       textAlign: "center",
 
-    }
+    },
+    closeButton:{
+      justifyContent:'center',
+      alignItems:'center',
+      width:50,
+      height:50,
+      borderWidth:0,
+      borderRadius:60,
+      //backgroundColor:buttonBackground,
+      backgroundColor:buttonBackground,
+    }, 
+    closeButtonContainer: {
+      marginBottom: "-16%", 
+      zIndex: 1, 
+      marginLeft: "46%"
+    },
   });

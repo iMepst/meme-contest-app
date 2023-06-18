@@ -1,11 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar, setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import { useState } from "react";
-import { Text, View, TouchableOpacity, TouchableHighlight, Alert, Image, Modal } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableHighlight, Alert, Image, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Button } from "@rneui/themed";
 import { styles } from "../Styles";
 import { Camera } from "expo-camera";
+import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from 'expo-image-manipulator';
+import {randImg} from "../ApiKey";
 
 
 
@@ -87,9 +89,24 @@ export default InputScreen = ({route, navigation}) => {
     })
     
   };
-  onPictureSaved = photo => {
+  onPictureSaved = async photo => {
+
+    if(type === Camera.Constants.Type.front){
+      let fliphoto = photo
+      try {
+        fliphoto = await ImageManipulator.manipulateAsync(photo.uri, [
+          {flip: ImageManipulator.FlipType.Horizontal
+          },
+        ], 
+        {})
+      }catch(e){
+        console.log(e);
+      }
+      manipulateImage(fliphoto);
+    }else{
+      manipulateImage(photo);
+    }
     //console.log(photo);
-    manipulateImage(photo);
     setModalVisible(false);
     toggleCameraHandler(false);
   };
@@ -192,12 +209,12 @@ export default InputScreen = ({route, navigation}) => {
 
             <View style={[{flex: 1}]}>
             <TouchableOpacity onPress={ async () => {
-              let response = await fetch("https://api.api-ninjas.com/v1/randomimage", {
-                method: "GET",
-                headers: { 'X-Api-Key': '', 'Accept': 'image/jpg'},
+              let response = await fetch("https://picsum.photos/500", {
+                //method: "GET",
+                //headers: { 'X-Api-Key': randImg, 'Accept': 'image/jpg'},
               });
-              console.log(response)
-
+              console.log(response.url)
+              setSelectedImage({ localUri: response.url })
             }}>
               <Text style={{ textAlign: "center" }}>
                   Random image
@@ -206,8 +223,20 @@ export default InputScreen = ({route, navigation}) => {
             </View>
           </View>
 
+          <View style={styles.closeButtonContainer}>
+            {selectedImage === null ? (
+              <View style={[styles.closeButton, {opacity: 0}]}>
+              </View>
+            ) : (
+              <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.closeButton}>
+                <Ionicons name="trash-outline" size={30} style={[{color:"tomato"}, {left: 1}]} />
+              </TouchableOpacity>
+            )}
+          </View>
+
 
           <View style={[styles.imageshadowTile, styles.imagePreview, styles.singleItem]}>
+       
           {selectedImage === null ? (
             <TouchableOpacity onPress={null}>
               <Text style={{ textAlign: "center" }}>
