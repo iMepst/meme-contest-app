@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
-import { Text, View, TouchableOpacity, Alert, Image, Modal } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableHighlight, Alert, Image, Modal } from 'react-native';
 import { Button } from "@rneui/themed";
 import { styles } from "../Styles";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from 'expo-image-manipulator';
 
 
 
@@ -14,6 +15,7 @@ export default InputScreen = ({route, navigation}) => {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [selectedImage, setSelectedImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const resolution = {height: 500, width: 500};
 
   const verifyPermissions = async (type) => {
     let result;
@@ -40,14 +42,32 @@ export default InputScreen = ({route, navigation}) => {
       exif: false,
     });
     if (pickerResult.canceled === true) return;
-    setSelectedImage({ localUri: pickerResult.assets[0].uri });
+    manipulateImage(pickerResult.assets[0]);
+    //console.log("ORIGINAL: ", pickerResult.assets[0]);
   };
 
-  const toggleCameraHandler = async () => {
+  const toggleCameraHandler = async (bool) => {
     const hasPermission = await verifyPermissions('camera');
     if (!hasPermission) return;
-    setIsCameraOn(!isCameraOn);
+    setIsCameraOn(bool);
+    //let camres = await ImagePicker.launchCameraAsync ({
+    //  allowsEditing: true,
+    //  aspect: [1,1],
+    //  exif: false,
+    //});
   };
+
+  const onDoublePress = () => {
+    const time = new Date().getTime();
+    const delta = time - this.lastPress;
+
+    const DOUBLE_PRESS_DELAY = 400;
+    if (delta < DOUBLE_PRESS_DELAY) {
+      flipCameraHandler()
+    }
+    this.lastPress = time;
+  };
+
 
   const flipCameraHandler = () => {
     if (isCameraOn) {
@@ -61,14 +81,66 @@ export default InputScreen = ({route, navigation}) => {
 
   const takePicture = async () => {
     if (!isCameraOn) return
-    this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+    this.camera.pausePreview()
+    this.camera.takePictureAsync({ 
+      onPictureSaved: this.onPictureSaved,
+    })
+    
+  };
+  onPictureSaved = photo => {
+    //console.log(photo);
+    manipulateImage(photo);
+    setModalVisible(false);
+    toggleCameraHandler(false);
   };
 
-  onPictureSaved = photo => {
-    //console.log(photo.uri);
-    setSelectedImage({ localUri: photo.uri });
-    setModalVisible(false);
-    toggleCameraHandler();
+  const manipulateImage = async (image) => {
+    let manipImage = null;
+    try {
+      manipImage = await ImageManipulator.manipulateAsync(image.uri, [
+        {resize:{
+          width: resolution.width,
+          //height: resolution.width,
+          }
+        },
+      ], 
+      {})
+      if(manipImage.height > manipImage.width){
+
+        const cropRatio = (manipImage.height-500)/2
+        manipImage = await ImageManipulator.manipulateAsync(manipImage.uri, [
+          {rotate: 180},
+          {crop: {
+            height: manipImage.height, 
+            originY: cropRatio,
+            width: manipImage.width,
+            originX: 0,
+            }
+          },
+          {rotate: -180},
+        ], 
+        {})
+        manipImage = await ImageManipulator.manipulateAsync(manipImage.uri, [
+          {crop: {
+            height: manipImage.height, 
+            originY: cropRatio,
+            width: manipImage.width,
+            originX: 0,
+            }
+          },
+        ], 
+        {})
+
+      }
+    }catch(e){
+      console.log(e);
+    }
+    //console.log(manipImage);
+    {manipImage != null ? (
+      setSelectedImage({ localUri: manipImage.uri })
+    ) : (
+      Alert.alert('Invalid Image. Please try again or select a different one')
+    )}
   };
 
   return (
@@ -77,24 +149,21 @@ export default InputScreen = ({route, navigation}) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <TouchableOpacity style={styles.centeredView} onPress={() => {setModalVisible(false); toggleCameraHandler();}}>
+        >
+        <TouchableOpacity style={styles.centeredView} onPress={() => {setModalVisible(false); toggleCameraHandler(false);}}>
           <View style={styles.modalView}>
             {!isCameraOn ? (
             <Text style={{ textAlign: "center" }}>
               Allow access to the camera to use this feature
             </Text>
             ) : (
-            <TouchableOpacity style={styles.cameraContainer} onPress={flipCameraHandler}>
+            <TouchableHighlight style={styles.cameraContainer} onPress={() => onDoublePress()}>
               <Camera
                 style={styles.cameraPreview}
                 type={type}
                 ref={(ref) => { this.camera = ref }}
                 />
-            </TouchableOpacity>
+            </TouchableHighlight >
             )}
             <TouchableOpacity onPress={() => takePicture()} style={styles.shutterButton}/>
           </View>
@@ -114,7 +183,7 @@ export default InputScreen = ({route, navigation}) => {
 
           <View style={[styles.singleItem, styles.imageshadowTile, styles.cameraSelectPreview]}>
             <View style={[{flex: 1}]}>
-              <TouchableOpacity onPress={() => {setModalVisible(true); toggleCameraHandler();}}>
+              <TouchableOpacity onPress={() => {setModalVisible(true); toggleCameraHandler(true);}}>
                 <Text style={{ textAlign: "center" }}>
                     Take a photo
                 </Text>
@@ -125,7 +194,7 @@ export default InputScreen = ({route, navigation}) => {
             <TouchableOpacity onPress={ async () => {
               let response = await fetch("https://api.api-ninjas.com/v1/randomimage", {
                 method: "GET",
-                headers: { 'X-Api-Key': 'oQ43vak79Th9fR5U30MKpw==JBXrbin3Nm66FYgn', 'Accept': 'image/jpg'},
+                headers: { 'X-Api-Key': '', 'Accept': 'image/jpg'},
               });
               console.log(response)
 
@@ -146,12 +215,12 @@ export default InputScreen = ({route, navigation}) => {
               </Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity onPress={null}>
+            <TouchableHighlight accessible={false} onPress={null}>
               <Image
                 source={{ uri: selectedImage.localUri }}
                 style={[styles.imagePreview]}
               />
-            </TouchableOpacity>
+            </TouchableHighlight>
           )}
           </View>
 
@@ -159,7 +228,13 @@ export default InputScreen = ({route, navigation}) => {
         </View>
       </View>
       <View style={styles.inputlower}>
-        <Button title="Confirm" onPress={() => navigation.navigate("Create", {selectedImage: selectedImage })} />
+        <Button title="Confirm" onPress={() => {
+          {selectedImage != null ? (
+            navigation.navigate("Create", {selectedImage: selectedImage })
+          ) : (
+            Alert.alert('Please select image.')
+          )}
+        }} />
       </View>
 
 
@@ -167,40 +242,6 @@ export default InputScreen = ({route, navigation}) => {
       <StatusBar style="auto" />
     </View>
 
-
-
-
-
- /*      <Button title="Toggle Camera" onPress={toggleCameraHandler} />
-      <View style={[styles.shadowTile, styles.cameraPreview]}>
-        {!isCameraOn ? (
-          <Text style={{ textAlign: "center" }}>
-            Toggle camera and tap to flip
-          </Text>
-        ) : (
-          <TouchableOpacity onPress={flipCameraHandler}>
-            <View style={{ borderRadius: 10, overflow: "hidden" }}>
-              <Camera style={styles.cameraPreview} type={type} />
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
-      <Button title="Select Image" onPress={selectImageHandler} />
-      <View style={[styles.shadowTile, styles.cameraPreview]}>
-        {selectedImage === null ? (
-          <Text style={{ textAlign: "center" }}>
-            Select an image and tap to delete
-          </Text>
-        ) : (
-          <TouchableOpacity onPress={() => setSelectedImage(null)}>
-            <Image
-              source={{ uri: selectedImage.localUri }}
-              style={styles.cameraPreview}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
- */
 
   );
 }

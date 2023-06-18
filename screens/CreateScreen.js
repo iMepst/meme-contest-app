@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableWithoutFeedback , View, Keyboard} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
@@ -25,6 +25,7 @@ export default CreateScreen = ({route, navigation}) => {
   }, [navigation]);
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.body}>
       <View style={style.topContainer}>
         <TextInput
@@ -51,6 +52,7 @@ export default CreateScreen = ({route, navigation}) => {
         />
       </View>
     </View>
+    </TouchableWithoutFeedback >
   );
 }
 

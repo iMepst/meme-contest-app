@@ -19,7 +19,7 @@ export default ResultScreen = ({route, navigation}) => {
     const data = new FormData();
     data.append("topText", topText);
     data.append("bottomText", bottomText);
-    //data.append("imgUrl", "https://storage.googleapis.com/memebuild/default/obama.jpg")
+    //data.append("imgUrl", "https://storage.googleapis.com/memebuild/default/obama.jpg");
     data.append("image", {
       name: selectedImage.localUri.substr(selectedImage.localUri.lastIndexOf('/') + 1),
       type: "image/jpg",
@@ -36,12 +36,12 @@ export default ResultScreen = ({route, navigation}) => {
         },
         body: data,
       });
-      console.log(response)
+      //console.log("RESPONSE: ",response);
       response = await response.json();
       if (response.cod < 400) {
         setMeme(response.url);
       }
-      console.log(response)
+      console.log(response);
     } catch (err) {
       console.error(err);
     }
@@ -68,7 +68,7 @@ export default ResultScreen = ({route, navigation}) => {
   return (
     <View style={styles.body}>
       <Image
-        source={meme}
+        source={{ uri: meme }}
         style={styles.imagePreview}
       />
     </View>

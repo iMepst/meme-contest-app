@@ -152,6 +152,11 @@ export const styles = StyleSheet.create({
     cameraPreview: {
       flex: 1,
     },
+    cameraShot: {
+      borderRadius: 20,
+      flex: 1,
+      backgroundColor: "red",
+    },
     textInput: {
       width: "100%",
       height: 50,
