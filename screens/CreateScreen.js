@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState} from 'react';
-import {StyleSheet, TextInput, TouchableWithoutFeedback , View, Keyboard} from 'react-native';
+import { TextInput, TouchableWithoutFeedback , View, Keyboard, Alert} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
@@ -27,7 +27,7 @@ export default CreateScreen = ({route, navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.body}>
-      <View style={style.topContainer}>
+      <View style={styles.createTop}>
         <TextInput
           style={styles.textInput}
           placeholder="Top text"
@@ -45,22 +45,35 @@ export default CreateScreen = ({route, navigation}) => {
           value={bottomText}
         />
       </View>
-      <View style={style.bottomContainer}>
+      <View style={styles.createBottom}>
+
         <Button
-          title="Create"
-          onPress={() => navigation.navigate("Result", {selectedImage, topText, bottomText})}
+          title="CREATE"
+          icon={<Ionicons name="ios-checkmark-sharp" size={40} style={{color: styles.textColor, marginTop: -10, marginBottom: -10, left: -40}} />}
+          onPress={() => {
+            if(topText == "" && bottomText == ""){
+              Alert.alert("Set text before continuing.")
+            }else{
+              navigation.navigate("Result", {selectedImage, topText, bottomText})
+            }
+          }}
+          iconRight
+          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24, right: 14 }}
+          buttonStyle={{
+            backgroundColor: styles.buttonBackground,
+            borderColor: styles.textColor,
+            borderWidth: 5,
+            borderRadius: 12,
+          }}
+          containerStyle={{
+            width: "65%",
+          }}
         />
+      </View>
+      <View style={styles.headerSpace}>
+
       </View>
     </View>
     </TouchableWithoutFeedback >
   );
 }
-
-const style = StyleSheet.create({
-  topContainer: {
-    height: "60%"
-  },
-  bottomContainer: {
-    height: "30%"
-  },
-})

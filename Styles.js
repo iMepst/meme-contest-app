@@ -4,7 +4,7 @@ const backgroundColor = "#D8C4B6";
 const buttonBackground = "#E6D9CE";
 const textColor = "#213555"
 const headerFontSize = 36;
-const tabBarActiveColor= '#1A72FF';
+const tabBarActiveColor= '#FF471A';
 const tabBarInactiveColor= "#D8C4B6";
 const shadowColor = "#2A313C";
 const tabBarButton = "#FF471A";
@@ -84,9 +84,9 @@ export const styles = StyleSheet.create({
       flex: 1,
     },
     inputlower: {
-      flex: 0.3,
+      flex: 0.12,
       alignItems: 'center',
-      justifyContent: 'top',
+      justifyContent: 'center',
       //backgroundColor: "red",
       width: '100%',
     },
@@ -95,9 +95,11 @@ export const styles = StyleSheet.create({
       justifyContent: "space-evenly",
     },
     imagePreview: {
-      width: 200,
-      height: 200,
+      width: 250,
+      height: 250,
       borderRadius: 20,
+      borderColor: textColor,
+      borderWidth: 1,
     },
     imageshadowTile: {
       shadowColor: "black",
@@ -115,11 +117,15 @@ export const styles = StyleSheet.create({
       width: "80%",
       height: "20%",
       borderRadius: 20,
+      borderColor: textColor,
+      borderWidth: 1,
     },
     cameraSelectPreview: {
       width: "80%",
       height: "15%",
       borderRadius: 20,
+      borderColor: textColor,
+      borderWidth: 1,
     },
     centeredView: {
       flex: 1,
@@ -173,10 +179,82 @@ export const styles = StyleSheet.create({
       borderRadius:60,
       //backgroundColor:buttonBackground,
       backgroundColor:buttonBackground,
+      borderColor: textColor,
+      borderWidth: 1,
     }, 
     closeButtonContainer: {
-      marginBottom: "-16%", 
+      marginBottom: "-12%", 
       zIndex: 1, 
-      marginLeft: "46%"
+      marginLeft: "59%"
     },
+    resultPreview: {
+      width: 350,
+      height: 350,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderColor: textColor,
+      borderWidth: 1,
+    },
+    resultPreviewBlank: {
+      width: 350,
+      height: 350,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      backgroundColor: buttonBackground,
+      borderColor: textColor,
+      borderWidth: 1,
+      alignItems: "center",
+      justifyContent: 'center',
+    },
+    resultTop: {
+      flex: 0.65,
+      //backgroundColor: "green",
+      width: "100%",
+      alignItems: "center",
+      justifyContent: 'center',
+    },
+    resultBottom: {
+      flex: 0.17,
+      paddingBottom: -50,
+      //backgroundColor: "red",
+      width: "100%",
+      alignItems: "center",
+      //justifyContent: 'top',
+      flexDirection: "column",
+      justifyContent: "space-evenly",
+    },
+    buttonRow: {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      width: 350
+    },
+    headerSpace: {
+      flex: 0.18,
+    },
+    doubleStack: {
+      flex: 1, 
+      height: "100%", 
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    buttonText: {
+      textAlign: "center",
+      color: textColor,
+      fontWeight: "bold",
+      fontSize: 16,
+    },
+    createBottom: {
+      flex: 0.12,
+      width: "100%",
+      alignItems: "center",
+      justifyContent: 'center',
+    },
+    createTop: {
+      flex: 0.7,
+      width: "100%",
+      alignItems: "center",
+      justifyContent: 'center',
+    }
+    
+    
   });

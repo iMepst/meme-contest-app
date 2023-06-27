@@ -189,26 +189,31 @@ export default InputScreen = ({route, navigation}) => {
 
       <View style={styles.inputupper}>
         <View style={styles.inputitems}>
-
-          <View style={[styles.imageshadowTile, styles.imageSelectPreview, styles.singleItem]}>
-            <TouchableOpacity onPress={() => selectImageHandler()}>
-              <Text style={{ textAlign: "center" }}>
+          <View style={[styles.imageshadowTile, styles.imageSelectPreview, {shadowRadius: 10}, styles.singleItem]} >
+            <TouchableOpacity 
+            style={[styles.doubleStack, {flexDirection: "row"}]}
+            onPress={() => selectImageHandler()}>
+              <Text style={[styles.buttonText, {flex: 0.79}]}>
                   Choose an image from your gallery
               </Text>
+              <Ionicons iconRight name="ios-image" size={50} style={[{color:styles.textColor}, {flex: 0.21}]} />
             </TouchableOpacity>
+
           </View>
 
           <View style={[styles.singleItem, styles.imageshadowTile, styles.cameraSelectPreview]}>
-            <View style={[{flex: 1}]}>
-              <TouchableOpacity onPress={() => {setModalVisible(true); toggleCameraHandler(true);}}>
-                <Text style={{ textAlign: "center" }}>
-                    Take a photo
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={[{flex: 1}]}>
-            <TouchableOpacity onPress={ async () => {
+            <TouchableOpacity 
+            style={styles.doubleStack}
+            onPress={() => {setModalVisible(true); toggleCameraHandler(true);}}>
+              <Ionicons iconRight name="ios-camera" size={40} style={[{color:styles.textColor}]} />
+              <Text style={styles.buttonText}>
+                  Take a photo
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+            style={styles.doubleStack}
+            onPress={ async () => {
               let response = await fetch("https://picsum.photos/500", {
                 //method: "GET",
                 //headers: { 'X-Api-Key': randImg, 'Accept': 'image/jpg'},
@@ -216,11 +221,12 @@ export default InputScreen = ({route, navigation}) => {
               console.log(response.url)
               setSelectedImage({ localUri: response.url })
             }}>
-              <Text style={{ textAlign: "center" }}>
+              <Ionicons iconRight name="ios-shuffle" size={40} style={[{color:styles.textColor}]} />
+              <Text style={styles.buttonText}>
                   Random image
               </Text>
             </TouchableOpacity>
-            </View>
+
           </View>
 
           <View style={styles.closeButtonContainer}>
@@ -240,7 +246,7 @@ export default InputScreen = ({route, navigation}) => {
           {selectedImage === null ? (
             <TouchableOpacity onPress={null}>
               <Text style={{ textAlign: "center" }}>
-                No Image selected
+                No image selected
               </Text>
             </TouchableOpacity>
           ) : (
@@ -257,16 +263,33 @@ export default InputScreen = ({route, navigation}) => {
         </View>
       </View>
       <View style={styles.inputlower}>
-        <Button title="Confirm" onPress={() => {
-          {selectedImage != null ? (
-            navigation.navigate("Create", {selectedImage: selectedImage })
-          ) : (
-            Alert.alert('Please select image.')
-          )}
-        }} />
+
+
+        <Button
+          title="CONFIRM"
+          icon={<Ionicons name="ios-checkmark-sharp" size={40} style={{color: styles.textColor, marginTop: -10, marginBottom: -10, left: -40}} />}
+          onPress={() => {
+            {selectedImage != null ? (
+              navigation.navigate("Create", {selectedImage: selectedImage })
+            ) : (
+              Alert.alert('Please select an image.')
+            )}
+          }}
+          iconRight
+          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24, right: 14 }}
+          buttonStyle={{
+            backgroundColor: styles.buttonBackground,
+            borderColor: styles.textColor,
+            borderWidth: 5,
+            borderRadius: 12,
+          }}
+          containerStyle={{
+            width: "65%",
+          }}
+        />
       </View>
-
-
+      <View style={styles.headerSpace}>
+      </View>
 
       <StatusBar style="auto" />
     </View>
