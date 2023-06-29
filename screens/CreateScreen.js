@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState} from 'react';
-import { TextInput, TouchableWithoutFeedback , View, Keyboard, Alert} from 'react-native';
+import { TextInput, TouchableWithoutFeedback , View, Keyboard, Alert, KeyboardAvoidingView} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
@@ -17,7 +17,7 @@ export default CreateScreen = ({route, navigation}) => {
       headerLeft: () => (
         <Button
           type="clear"
-          icon={<Ionicons name="ios-chevron-back" size={styles.headerFontSize} style={styles.headerBackButton} />}
+          icon={<Ionicons name="ios-caret-back" size={styles.headerFontSize} style={styles.headerBackButton} />}
           onPress={() => navigation.goBack()}
         />
       ),
@@ -25,12 +25,22 @@ export default CreateScreen = ({route, navigation}) => {
   }, [navigation]);
 
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset = {10}
+    enabled = {true}
+    style={{flex: 1}}
+    >
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.body}>
       <View style={styles.createTop}>
         <TextInput
           style={styles.textInput}
           placeholder="Top text"
+          autoCapitalize = "characters"
+          autoComplete = "off"
+          autoCorrect = {false}
+          keyboardType = "ascii-capable"
           onChangeText={ val => setTopText(val)}
           value={topText}
         />
@@ -41,12 +51,15 @@ export default CreateScreen = ({route, navigation}) => {
         <TextInput
           style={styles.textInput}
           placeholder="Bottom text"
+          autoCapitalize = "characters"
+          autoComplete = "off"
+          autoCorrect = {false}
+          keyboardType = "ascii-capable"
           onChangeText={ val => setBottomText(val)}
           value={bottomText}
         />
       </View>
       <View style={styles.createBottom}>
-
         <Button
           title="CREATE"
           //icon={<Ionicons name="ios-checkmark-sharp" size={40} style={{color: styles.textColor, marginTop: -10, marginBottom: -10, left: -40}} />}
@@ -58,7 +71,7 @@ export default CreateScreen = ({route, navigation}) => {
             }
           }}
           iconRight
-          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24}}
+          titleStyle={{ fontFamily: styles.font, color: styles.textColor, fontSize: 25}}
           buttonStyle={{
             backgroundColor: styles.buttonBackground,
             borderColor: styles.textColor,
@@ -70,10 +83,11 @@ export default CreateScreen = ({route, navigation}) => {
           }}
         />
       </View>
-      <View style={styles.headerSpace}>
+      <View style={[styles.headerSpace]}>
 
       </View>
     </View>
     </TouchableWithoutFeedback >
+    </KeyboardAvoidingView>
   );
 }

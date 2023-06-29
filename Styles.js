@@ -4,10 +4,11 @@ const backgroundColor = "#D8C4B6";
 const buttonBackground = "#E6D9CE";
 const textColor = "#213555"
 const headerFontSize = 36;
-const tabBarActiveColor= '#FF471A';
+const tabBarActiveColor= '#6d93cf';
 const tabBarInactiveColor= "#D8C4B6";
 const shadowColor = "#2A313C";
-const tabBarButton = "#FF471A";
+const tabBarButton = "#213555";
+const font = 'Uniform_Rounded_Ultra';
 
 
 export const styles = StyleSheet.create({
@@ -19,6 +20,7 @@ export const styles = StyleSheet.create({
     tabBarInactiveColor: tabBarInactiveColor,
     shadowColor: shadowColor,
     tabBarButton: tabBarButton,
+    font: font,
     body: {
       flex: 1,
       backgroundColor: backgroundColor,
@@ -38,7 +40,7 @@ export const styles = StyleSheet.create({
       },
       headerTitleStyle: {
         fontSize: headerFontSize,
-        fontWeight: 'bold',
+        fontFamily: font,
         color: textColor,
       },
     },
@@ -135,25 +137,27 @@ export const styles = StyleSheet.create({
     modalView: {
       flex: 1,
       top: "28%",
-      paddingBottom: "50%",
+      paddingBottom: "48%",
       width: "93%",
       borderRadius: 20,
       //backgroundColor: "black",
     },
     shutterButton: {
-      width: 65,
-      height: 65,
+      width: 70,
+      height: 70,
       bottom: "14%",
-      right: "-40%",
+      alignSelf: "center",
       borderRadius: 60,
       backgroundColor: "white",
-      borderWidth: 2,
+      borderWidth: 3,
       borderColor: 'black',
     },
     cameraContainer: {
       flex: 1,
       borderRadius: 20,
       overflow: "hidden",
+      borderColor: textColor,
+      borderWidth: 3,
     },
     cameraPreview: {
       flex: 1,
@@ -164,10 +168,16 @@ export const styles = StyleSheet.create({
       backgroundColor: "red",
     },
     textInput: {
-      width: "100%",
-      height: 50,
-      fontSize: headerFontSize,
+      width: "78%",
+      height: 55,
+      fontFamily: font,
+      fontSize: 25,
       textAlign: "center",
+      backgroundColor: buttonBackground,
+      borderRadius:13,
+      borderWidth:3,
+      borderColor: textColor,
+      marginVertical: 10,
 
     },
     closeButton:{
@@ -175,7 +185,6 @@ export const styles = StyleSheet.create({
       alignItems:'center',
       width:50,
       height:50,
-      borderWidth:0,
       borderRadius:60,
       //backgroundColor:buttonBackground,
       backgroundColor:buttonBackground,
@@ -240,7 +249,7 @@ export const styles = StyleSheet.create({
     buttonText: {
       textAlign: "center",
       color: textColor,
-      fontWeight: "bold",
+      fontFamily: font,
       fontSize: 16,
     },
     createBottom: {
@@ -248,6 +257,8 @@ export const styles = StyleSheet.create({
       width: "100%",
       alignItems: "center",
       justifyContent: 'center',
+      height: 100
+      //position: "absolute"
     },
     createTop: {
       flex: 0.7,

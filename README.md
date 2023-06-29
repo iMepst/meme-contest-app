@@ -20,4 +20,6 @@ npm install @rneui/themed @rneui/base
 npx expo install expo-image-manipulator
 npx expo install expo-sharing
 npx expo install expo-file-system
+npx expo install expo-splash-screen
+npx expo install expo-font
 ```

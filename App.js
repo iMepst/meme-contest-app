@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Text, View } from 'react-native';
 import MainNavigator from "./navigation/MainNavigator";
-import { ImageContext } from "./data/ImageContext";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 //import AsyncStorage from "@react-native-async-storage/async-storage";
 
+SplashScreen.preventAutoHideAsync();
 
 export default (App) => {
-
-  IMAGE = []
-
-  const [image, setImage] = useState({
-    image: IMAGE,
+  const [fontsLoaded] = useFonts({
+    'Uniform_Rounded_Ultra': require('./assets/fonts/UniformRoundedUltra.otf'),
   });
-  
-  //useEffect(() => {
-  //    AsyncStorage.getItem('ToDoList').then(item => {
-  //      setToDoData(item)
-  //    })
-  //   
-  //}, []);
 
+    
+  const onLayoutRootView = async () => {
+      if (fontsLoaded) {
+        console.log("weg!")
+        await SplashScreen.hideAsync();
+      }
+  };
+
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <ImageContext.Provider value={[image, setImage]}>
-      <MainNavigator />
-    </ImageContext.Provider>
+    onLayoutRootView(),
+    <MainNavigator />
   );
 };

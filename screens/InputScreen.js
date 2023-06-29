@@ -276,7 +276,7 @@ export default InputScreen = ({route, navigation}) => {
             )}
           }}
           iconRight
-          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24, right: 14 }}
+          titleStyle={{ fontFamily: styles.font, color: styles.textColor, fontSize: 25, right: 14 }}
           buttonStyle={{
             backgroundColor: styles.buttonBackground,
             borderColor: styles.textColor,

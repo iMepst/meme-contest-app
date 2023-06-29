@@ -24,7 +24,12 @@ export default MainNavigator = () => {
         <Tab.Screen name="InputScreen" component={InputNavigator} options={{
           tabBarIcon: ({ focused, color, size }) => {
             color = styles.tabBarButton;
-            return <Ionicons name={'ios-add-circle'} size={80} color={color} style={{alignItems: "center", justifyContent: "center", bottom: 20, marginBottom: -30}} />
+            return (
+            <View style={{height: 80.5, width: 80.5, borderRadius: 40, backgroundColor: styles.backgroundColor, alignContent: "center", alignItems: "center", bottom: 15}}>
+              {/* <Ionicons name={'ios-add-circle'} size={90} color={styles.backgroundColor} style={{alignItems: "center", justifyContent: "center", bottom: 20, marginBottom: -30, left: 2.5}} /> */}
+              <Ionicons name={'ios-add-circle'} size={86} color={color} style={{bottom: 5.3, left: 0.2}}/>
+            </View>
+            )
           }
         }}/>
         <Tab.Screen name="GalerieScreen" component={GalerieNavigator} options={{

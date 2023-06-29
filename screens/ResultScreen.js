@@ -58,7 +58,7 @@ export default ResultScreen = ({route, navigation}) => {
       headerLeft: () => (
         <Button
           type="clear"
-          icon={<Ionicons name="ios-chevron-back" size={styles.headerFontSize} style={styles.headerBackButton} />}
+          icon={<Ionicons name="ios-caret-back" size={styles.headerFontSize} style={styles.headerBackButton} />}
           onPress={() => navigation.goBack()}
         />
       ),
@@ -89,7 +89,7 @@ export default ResultScreen = ({route, navigation}) => {
               }
             }}
             iconRight
-            titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24 }}
+            titleStyle={{ fontFamily: styles.font, color: styles.textColor, fontSize: 24 }}
             buttonStyle={{
               backgroundColor: styles.buttonBackground,
               borderColor: styles.textColor,
@@ -106,7 +106,7 @@ export default ResultScreen = ({route, navigation}) => {
             onPress={() => navigation.navigate('GalerieScreen', { screen: 'Galerie' })}
             icon={<Ionicons name="arrow-forward-circle-sharp" size={29} style={{marginLeft: 8, color: styles.textColor,}} />}
             iconRight
-            titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24 }}
+            titleStyle={{ fontFamily: styles.font,color: styles.textColor, fontSize: 24 }}
             buttonStyle={{
               backgroundColor: styles.buttonBackground,
               borderColor: styles.textColor,
@@ -127,7 +127,7 @@ export default ResultScreen = ({route, navigation}) => {
         title="CREATE MORE"
         onPress={() => navigation.navigate('InputScreen', { screen: 'Input' })}
         iconRight
-        titleStyle={{ fontWeight: 'bold', color: styles.buttonBackground, fontSize: 24}}
+        titleStyle={{ fontFamily: styles.font, color: styles.buttonBackground, fontSize: 25}}
         buttonStyle={{
             backgroundColor: styles.textColor,
             borderColor: styles.textColor,
