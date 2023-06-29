@@ -49,7 +49,7 @@ export default CreateScreen = ({route, navigation}) => {
 
         <Button
           title="CREATE"
-          icon={<Ionicons name="ios-checkmark-sharp" size={40} style={{color: styles.textColor, marginTop: -10, marginBottom: -10, left: -40}} />}
+          //icon={<Ionicons name="ios-checkmark-sharp" size={40} style={{color: styles.textColor, marginTop: -10, marginBottom: -10, left: -40}} />}
           onPress={() => {
             if(topText == "" && bottomText == ""){
               Alert.alert("Set text before continuing.")
@@ -58,7 +58,7 @@ export default CreateScreen = ({route, navigation}) => {
             }
           }}
           iconRight
-          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24, right: 14 }}
+          titleStyle={{ fontWeight: 'bold', color: styles.textColor, fontSize: 24}}
           buttonStyle={{
             backgroundColor: styles.buttonBackground,
             borderColor: styles.textColor,
