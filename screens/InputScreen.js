@@ -236,7 +236,7 @@ export default InputScreen = ({route, navigation}) => {
               </View>
             ) : (
               <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.closeButton}>
-                <Ionicons name="trash-outline" size={30} style={[{color:"tomato"}, {left: 1}]} />
+                <Ionicons name="trash-outline" size={30} style={[{color:"red"}, {left: 1}]} />
               </TouchableOpacity>
             )}
           </View>

@@ -3,12 +3,10 @@ import { Text, View, Alert, Image } from 'react-native';
 import { styles } from "../Styles";
 import { Button } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
-import logo from "../assets/logo.png"
-//import { ImageContext } from "../data/ImageContext";
+import logo from "../assets/logo.png";
 
 
 export default HomeScreen = ({ navigation }) => {
-   // const [item, setItem] = useContext(ImageContext);
 
     return (
         <View style={styles.body}>

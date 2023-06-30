@@ -265,6 +265,18 @@ export const styles = StyleSheet.create({
       width: "100%",
       alignItems: "center",
       justifyContent: 'center',
+    },
+    galleryView: {
+      flex: 1.2,
+      paddingBottom: 0,
+      //backgroundColor: "red",
+      width: "92%",
+      justifyContent: "center",
+      borderColor: textColor,
+      borderWidth: 4,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      backgroundColor: buttonBackground,
     }
     
     

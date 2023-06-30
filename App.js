@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 import MainNavigator from "./navigation/MainNavigator";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-//import AsyncStorage from "@react-native-async-storage/async-storage";
 
 SplashScreen.preventAutoHideAsync();
 
