@@ -22,4 +22,5 @@ npx expo install expo-sharing
 npx expo install expo-file-system
 npx expo install expo-splash-screen
 npx expo install expo-font
+npx expo install expo-media-library
 ```

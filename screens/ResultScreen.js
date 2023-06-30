@@ -1,10 +1,12 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, ActivityIndicator} from 'react-native';
+import {Text, View, ActivityIndicator, Alert } from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
 import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 import {memeGen} from "../ApiKey";
 
 export default ResultScreen = ({route, navigation}) => {
@@ -13,10 +15,10 @@ export default ResultScreen = ({route, navigation}) => {
   const topText = route.params.topText;
   const bottomText = route.params.bottomText;
 
+  const [dl, setDl] = useState(false);
   const [meme, setMeme] = useState(null);
 
   async function postMeme() {
-
     const data = new FormData();
     data.append("topText", topText);
     data.append("bottomText", bottomText);
@@ -39,11 +41,36 @@ export default ResultScreen = ({route, navigation}) => {
       });
       if (response.ok) {
         response = await response.json();
-        setMeme(response.url);
+        console.log("Generate complete: " + response.url);
+        setDl(true)
+        downloadMeme(response.url)
+
       }
-      console.log(response.url);
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  const downloadMeme = async (response) => {
+    const filename = response.split('/')[(response.split('/')).length - 1]
+    const result = await FileSystem.downloadAsync(
+      response,
+      FileSystem.documentDirectory + filename
+    );
+    console.log("Download complete: " + result.uri)
+    setMeme(result.uri)
+  }
+
+  const shareImage = (image) => {
+    if(Sharing.isAvailableAsync() && image != null){
+      Sharing.shareAsync(image)
+    }
+  }
+
+  const saveImage = async (image) => {
+    if(image != null){
+      await MediaLibrary.saveToLibraryAsync(image)
+      Alert.alert('Image saved')
     }
   }
 
@@ -71,6 +98,11 @@ export default ResultScreen = ({route, navigation}) => {
         {meme === null ? (
           <View style={styles.resultPreviewBlank}>
             <ActivityIndicator size="large" color={styles.tabBarButton}/>
+            {dl === true ? (
+              <Text style={[styles.buttonText, {paddingTop: 15}]}>Downloading...</Text>
+            ) : (
+              <Text style={[styles.buttonText, {paddingTop: 15}]}>Generating...</Text>
+            )}
           </View>
         ) : (
           <Image
@@ -84,9 +116,7 @@ export default ResultScreen = ({route, navigation}) => {
             title="SHARE"
             icon={<Ionicons name="share-social-sharp" size={29} style={{marginLeft: 8, color: styles.textColor,}} />}
             onPress={() => {
-              if(Sharing.isAvailableAsync()){
-                Sharing.shareAsync(meme)
-              }
+              shareImage(meme);
             }}
             iconRight
             titleStyle={{ fontFamily: styles.font, color: styles.textColor, fontSize: 24 }}
@@ -102,9 +132,12 @@ export default ResultScreen = ({route, navigation}) => {
             }}
           />
           <Button
-            title="VIEW ALL"
-            onPress={() => navigation.navigate('GalerieScreen', { screen: 'Galerie' })}
-            icon={<Ionicons name="arrow-forward-circle-sharp" size={29} style={{marginLeft: 8, color: styles.textColor,}} />}
+            title="SAVE"
+            //onPress={() => navigation.navigate('GalerieScreen', { screen: 'Galerie' })}
+            onPress={() => {
+              saveImage(meme)
+            }}
+            icon={<Ionicons name="ios-save" size={29} style={{marginLeft: 8, color: styles.textColor,}} />}
             iconRight
             titleStyle={{ fontFamily: styles.font,color: styles.textColor, fontSize: 24 }}
             buttonStyle={{

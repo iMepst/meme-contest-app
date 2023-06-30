@@ -154,6 +154,7 @@ export default InputScreen = ({route, navigation}) => {
     }
     //console.log(manipImage);
     {manipImage != null ? (
+      console.log(manipImage.uri),
       setSelectedImage({ localUri: manipImage.uri })
     ) : (
       Alert.alert('Invalid Image. Please try again or select a different one')

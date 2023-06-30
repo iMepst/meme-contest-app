@@ -15,7 +15,6 @@ export default (App) => {
     
   const onLayoutRootView = async () => {
       if (fontsLoaded) {
-        console.log("weg!")
         await SplashScreen.hideAsync();
       }
   };
