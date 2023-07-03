@@ -163,7 +163,7 @@ export default InputScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.body}>
-    <Modal
+    	<Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}

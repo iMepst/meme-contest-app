@@ -6,6 +6,8 @@ import * as FileSystem from 'expo-file-system';
 import { Button, Image } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import uuid from 'react-native-uuid';
+import * as Sharing from 'expo-sharing';
+import * as MediaLibrary from 'expo-media-library';
 
 
 export default GalerieScreen = ({route, navigation}) => {
@@ -46,6 +48,32 @@ export default GalerieScreen = ({route, navigation}) => {
       )
     });
     setimageKeyList([]);
+  }
+
+  deleteSingleFileInDirectory = async(image) => {
+    const filename = image.split('/')[(image.split('/')).length - 1]
+
+    FileSystem.deleteAsync(
+      FileSystem.documentDirectory + 'gallery/' + filename,
+      console.log("deleting: " + filename),
+    )
+    await getAllFilesInDirectory()
+    //setselectedImage({})
+    setModalVisible(false)
+  }
+
+  const shareImage = (image) => {
+    if(Sharing.isAvailableAsync() && image != null){
+      Sharing.shareAsync(image)
+      setModalVisible(false)
+    }
+  }
+
+  const saveImage = async (image) => {
+    if(image != null){
+      await MediaLibrary.saveToLibraryAsync(image)
+      setModalVisible(false)
+    }
   }
 
   useLayoutEffect(() => {
@@ -113,22 +141,84 @@ export default GalerieScreen = ({route, navigation}) => {
     <View style={styles.body}>
 
       <Modal
-        animationType="none"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
       >
-        <TouchableOpacity style={styles.centeredView} onPress={() => {setModalVisible(false);}}>
+        <TouchableOpacity style={[styles.centeredView, {backgroundColor: "#000000B3"}]} onPress={() => {setModalVisible(false);}}>
 
-          <View style={{alignItems: "center" ,backgroundColor: styles.buttonBackground, /* paddingBottom: "20%", */ padding: 0, borderWidth: 5, borderColor: styles.textColor, borderRadius: 25}}>
+          <View style={{alignItems: "center" ,backgroundColor: styles.buttonBackground,  padding: "2%", borderWidth: 4, borderColor: styles.textColor, borderRadius: 25}}>
           <Image
           source={{ uri: selectedImage.image }}
           style={{
             width: 350,
             height: 350,
             borderRadius: 20,
-            borderColor: "transparent"
+            borderColor: styles.textColor,
+            borderWidth: 2,
           }}
           />
+          <View style={{flexDirection: "row", paddingHorizontal: 0, paddingVertical: 6, width: "98%"}}>
+
+            <Button
+              title="SHARE"
+              icon={<Ionicons name="share-social-sharp" size={29} style={{marginLeft: 8, color: styles.textColor,}} />}
+              onPress={() => {
+                shareImage(selectedImage.image);
+              }}
+              iconRight
+              titleStyle={{ fontFamily: styles.font, color: styles.textColor, fontSize: 24 }}
+              buttonStyle={{
+                backgroundColor: styles.buttonBackground,
+                borderColor: styles.textColor,
+                borderWidth: 3,
+                borderRadius: 12,
+              }}
+              containerStyle={{
+                width: "40%",
+                paddingHorizontal: 0
+              }}
+            />
+
+            <Button
+              title="SAVE"
+              onPress={() => {
+                saveImage(selectedImage.image)
+              }}
+              icon={<Ionicons name="ios-arrow-down-circle" size={29} style={{marginLeft: 8, color: styles.textColor, bottom: 1}} />}
+              iconRight
+              titleStyle={{ fontFamily: styles.font,color: styles.textColor, fontSize: 24 }}
+              buttonStyle={{
+                backgroundColor: styles.buttonBackground,
+                borderColor: styles.textColor,
+                borderWidth: 3,
+                borderRadius: 12,
+              }}
+              containerStyle={{
+                width: "40%",
+                paddingHorizontal: 4
+              }}
+            />
+
+            <Button
+            type="clear"
+            icon={<Ionicons name="trash-outline" size={29} style={[{color:"red"}, {left: 1}, {bottom: 0}]}/>}
+            onPress={() => deleteSingleFileInDirectory(selectedImage.image)}
+            buttonStyle={{
+              backgroundColor: styles.buttonBackground,
+              borderColor: styles.textColor,
+              borderWidth: 3,
+              borderRadius: 12,
+            }}
+            containerStyle={{
+              width: "16%",
+              paddingHorizontal: 0
+            }}
+            />
+
+          </View>
+
+
           </View>
 
         </TouchableOpacity>
