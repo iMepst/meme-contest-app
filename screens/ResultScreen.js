@@ -150,7 +150,7 @@ export default ResultScreen = ({route, navigation}) => {
             buttonStyle={{
               backgroundColor: styles.buttonBackground,
               borderColor: styles.textColor,
-              borderWidth: 1,
+              borderWidth: 3,
               borderBottomStartRadius: 12,
             }}
             containerStyle={{
@@ -169,7 +169,7 @@ export default ResultScreen = ({route, navigation}) => {
             buttonStyle={{
               backgroundColor: styles.buttonBackground,
               borderColor: styles.textColor,
-              borderWidth: 1,
+              borderWidth: 3,
               borderBottomEndRadius: 12,
             }}
             containerStyle={{

@@ -65,7 +65,6 @@ export default GalerieScreen = ({route, navigation}) => {
   const shareImage = (image) => {
     if(Sharing.isAvailableAsync() && image != null){
       Sharing.shareAsync(image)
-      setModalVisible(false)
     }
   }
 
@@ -140,6 +139,7 @@ export default GalerieScreen = ({route, navigation}) => {
   return (
     <View style={styles.body}>
 
+
       <Modal
         animationType="fade"
         transparent={true}
@@ -147,7 +147,7 @@ export default GalerieScreen = ({route, navigation}) => {
       >
         <TouchableOpacity style={[styles.centeredView, {backgroundColor: "#000000B3"}]} onPress={() => {setModalVisible(false);}}>
 
-          <View style={{alignItems: "center" ,backgroundColor: styles.buttonBackground,  padding: "2%", borderWidth: 4, borderColor: styles.textColor, borderRadius: 25}}>
+        <View style={{alignItems: "center" ,backgroundColor: styles.buttonBackground,  padding: "2%", borderWidth: 4, borderColor: styles.textColor, borderRadius: 25}}>
           <Image
           source={{ uri: selectedImage.image }}
           style={{
@@ -217,9 +217,7 @@ export default GalerieScreen = ({route, navigation}) => {
             />
 
           </View>
-
-
-          </View>
+        </View>
 
         </TouchableOpacity>
       </Modal>

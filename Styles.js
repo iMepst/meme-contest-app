@@ -194,7 +194,7 @@ export const styles = StyleSheet.create({
     closeButtonContainer: {
       marginBottom: "-12%", 
       zIndex: 1, 
-      marginLeft: "59%"
+      marginLeft: "59%",
     },
     resultPreview: {
       width: 350,
@@ -202,7 +202,7 @@ export const styles = StyleSheet.create({
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       borderColor: textColor,
-      borderWidth: 1,
+      borderWidth: 3,
     },
     resultPreviewBlank: {
       width: 350,

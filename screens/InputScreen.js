@@ -235,12 +235,16 @@ export default InputScreen = ({route, navigation}) => {
               <View style={[styles.closeButton, {opacity: 0}]}>
               </View>
             ) : (
+              <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+{/*               <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.closeButton}>
+                <Ionicons name="color-wand" size={30} style={[{color:styles.textColor}]} />
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={() => setSelectedImage(null)} style={styles.closeButton}>
                 <Ionicons name="trash-outline" size={30} style={[{color:"red"}, {left: 1}]} />
               </TouchableOpacity>
+              </View>
             )}
           </View>
-
 
           <View style={[styles.imageshadowTile, styles.imagePreview, styles.singleItem]}>
        
