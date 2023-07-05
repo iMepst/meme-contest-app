@@ -1,6 +1,5 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
-import { StatusBar } from 'expo-status-bar';
-import {Text, View, ActivityIndicator, Modal } from 'react-native';
+import {Text, View, ActivityIndicator, Modal, Alert} from 'react-native';
 import { styles } from "../Styles";
 import { Ionicons } from "@expo/vector-icons";
 import {Button, Image} from "@rneui/themed";
@@ -24,13 +23,11 @@ export default ResultScreen = ({route, navigation}) => {
     const data = new FormData();
     data.append("topText", topText);
     data.append("bottomText", bottomText);
-    //data.append("imgUrl", "https://storage.googleapis.com/memebuild/default/obama.jpg");
     data.append("image", {
       name: selectedImage.localUri.substr(selectedImage.localUri.lastIndexOf('/') + 1),
       type: "image/jpg",
       uri: selectedImage.localUri.replace("file://", ""),
     });
-    //console.log(data)
 
     try {
       let response = await fetch("https://memebuild.com/api/1.0/generateMeme", {
@@ -46,7 +43,6 @@ export default ResultScreen = ({route, navigation}) => {
         console.log("Generate complete: " + response.url);
         setDl(true)
         downloadMeme(response.url)
-
       }
     } catch (err) {
       Alert.alert("Something went wrong. Please try again.")

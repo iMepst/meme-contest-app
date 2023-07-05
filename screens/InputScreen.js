@@ -1,15 +1,11 @@
-import { StatusBar, setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import { useState } from "react";
-import { Text, View, TouchableOpacity, TouchableHighlight, Alert, Image, Modal, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableHighlight, Alert, Image, Modal } from 'react-native';
 import { Button } from "@rneui/themed";
 import { styles } from "../Styles";
 import { Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from 'expo-image-manipulator';
-import {randImg} from "../ApiKey";
-
-
 
 export default InputScreen = ({route, navigation}) => {
 
@@ -84,10 +80,10 @@ export default InputScreen = ({route, navigation}) => {
   const takePicture = async () => {
     if (!isCameraOn) return
     this.camera.pausePreview()
-    this.camera.takePictureAsync({ 
+    this.camera.takePictureAsync({
       onPictureSaved: this.onPictureSaved,
     })
-    
+
   };
   onPictureSaved = async photo => {
 
@@ -97,7 +93,7 @@ export default InputScreen = ({route, navigation}) => {
         fliphoto = await ImageManipulator.manipulateAsync(photo.uri, [
           {flip: ImageManipulator.FlipType.Horizontal
           },
-        ], 
+        ],
         {})
       }catch(e){
         console.log(e);
@@ -120,7 +116,7 @@ export default InputScreen = ({route, navigation}) => {
           //height: resolution.width,
           }
         },
-      ], 
+      ],
       {})
       if(manipImage.height > manipImage.width){
 
@@ -128,24 +124,24 @@ export default InputScreen = ({route, navigation}) => {
         manipImage = await ImageManipulator.manipulateAsync(manipImage.uri, [
           {rotate: 180},
           {crop: {
-            height: manipImage.height, 
+            height: manipImage.height,
             originY: cropRatio,
             width: manipImage.width,
             originX: 0,
             }
           },
           {rotate: -180},
-        ], 
+        ],
         {})
         manipImage = await ImageManipulator.manipulateAsync(manipImage.uri, [
           {crop: {
-            height: manipImage.height, 
+            height: manipImage.height,
             originY: cropRatio,
             width: manipImage.width,
             originX: 0,
             }
           },
-        ], 
+        ],
         {})
 
       }
@@ -191,7 +187,7 @@ export default InputScreen = ({route, navigation}) => {
       <View style={styles.inputupper}>
         <View style={styles.inputitems}>
           <View style={[styles.imageshadowTile, styles.imageSelectPreview, {shadowRadius: 10}, styles.singleItem]} >
-            <TouchableOpacity 
+            <TouchableOpacity
             style={[styles.doubleStack, {flexDirection: "row"}]}
             onPress={() => selectImageHandler()}>
               <Text style={[styles.buttonText, {flex: 0.79}]}>
@@ -203,7 +199,7 @@ export default InputScreen = ({route, navigation}) => {
           </View>
 
           <View style={[styles.singleItem, styles.imageshadowTile, styles.cameraSelectPreview]}>
-            <TouchableOpacity 
+            <TouchableOpacity
             style={styles.doubleStack}
             onPress={() => {setModalVisible(true); toggleCameraHandler(true);}}>
               <Ionicons iconRight name="ios-camera" size={40} style={[{color:styles.textColor}]} />
@@ -211,7 +207,7 @@ export default InputScreen = ({route, navigation}) => {
                   Take a photo
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
             style={styles.doubleStack}
             onPress={ async () => {
@@ -247,7 +243,7 @@ export default InputScreen = ({route, navigation}) => {
           </View>
 
           <View style={[styles.imageshadowTile, styles.imagePreview, styles.singleItem]}>
-       
+
           {selectedImage === null ? (
             <TouchableOpacity onPress={null}>
               <Text style={{ textAlign: "center" }}>
@@ -296,7 +292,6 @@ export default InputScreen = ({route, navigation}) => {
       <View style={styles.headerSpace}>
       </View>
 
-      <StatusBar style="auto" />
     </View>
 
 
