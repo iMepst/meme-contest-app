@@ -49,15 +49,13 @@ export const styles = StyleSheet.create({
       marginRight: -10,
       marginLeft: -4,
     },
-    tabBar: {
-      headerShown: false,
-      tabBarShowLabel: false,
+
       tabBarStyle: {
         position: "absolute",
         bottom: 25,
         left: 15,
         right: 15,
-        elevation: 0,
+
         backgroundColor: textColor,
         borderRadius: 15,
         height: 80,
@@ -69,9 +67,9 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.4,
         shadowRadius: 3.5,
-        levation: 5,
+        elevation: 5,
       }
-    },
+    ,
     inputupper: {
       flex: 0.7,
       //backgroundColor: "green",
