@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, FlatList, SafeAreaView, ActivityIndicator, TouchableHighlight, Modal, TouchableOpacity } from 'react-native';
+import { View, FlatList, SafeAreaView, Modal, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useLayoutEffect } from "react";
 import { styles } from "../Styles";
 import * as FileSystem from 'expo-file-system';
@@ -8,7 +8,8 @@ import { Ionicons } from "@expo/vector-icons";
 import uuid from 'react-native-uuid';
 import * as Sharing from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
-import {compareStreams} from "expo-camera/build/WebCameraUtils";
+import GalleryItem from "../components/GalleryItem";
+
 
 
 export default GalerieScreen = ({route, navigation}) => {
@@ -123,26 +124,6 @@ export default GalerieScreen = ({route, navigation}) => {
     });
   }, [navigation]);
 
-
-  const Item = ({item}) => (
-    <TouchableHighlight
-      onPress={() => {setModalVisible(true); setselectedImage(item)}}
-      style={{
-        flex: 1,
-      }}
-    >
-      <Image
-      source={{uri: item.image}}
-      containerStyle={{
-        aspectRatio: 1,
-        width: '100%',
-        flex: 1,
-        }}
-      PlaceholderContent={<ActivityIndicator size="large" color={styles.tabBarButton}/>}
-      />
-    </TouchableHighlight>
-  );
-
   return (
     <View style={styles.body}>
 
@@ -232,19 +213,18 @@ export default GalerieScreen = ({route, navigation}) => {
       <View style={styles.galleryView}>
       <SafeAreaView>
         <FlatList
-        data={imageKeyList}
-        style={{
-          width: '100%',
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-          backgroundColor: styles.buttonBackground,
-          height: "100%"
-        }}
-        numColumns={2}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <Item item={item} />
-
-        }
+          data={imageKeyList}
+          style={{
+            width: '100%',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            backgroundColor: styles.buttonBackground,
+            height: "100%"
+          }}
+          numColumns={2}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <GalleryItem item={item} setModalVisible={setModalVisible} setSelectedImage={setselectedImage} />
+          }
         />
     </SafeAreaView>
 

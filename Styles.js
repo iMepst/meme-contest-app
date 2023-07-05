@@ -190,10 +190,10 @@ export const styles = StyleSheet.create({
       backgroundColor:buttonBackground,
       borderColor: textColor,
       borderWidth: 1,
-    }, 
+    },
     closeButtonContainer: {
-      marginBottom: "-12%", 
-      zIndex: 1, 
+      marginBottom: "-12%",
+      zIndex: 1,
       marginLeft: "59%",
     },
     resultPreview: {
@@ -241,8 +241,8 @@ export const styles = StyleSheet.create({
       flex: 0.18,
     },
     doubleStack: {
-      flex: 1, 
-      height: "100%", 
+      flex: 1,
+      height: "100%",
       justifyContent: "center",
       alignItems: "center"
     },
@@ -269,7 +269,6 @@ export const styles = StyleSheet.create({
     galleryView: {
       flex: 1.2,
       paddingBottom: 0,
-      //backgroundColor: "red",
       width: "92%",
       justifyContent: "center",
       borderColor: textColor,
@@ -277,7 +276,11 @@ export const styles = StyleSheet.create({
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       backgroundColor: buttonBackground,
-    }
-    
-    
+    },
+    galleryItemImageContainer: {
+      aspectRatio: 1,
+      flex: 1,
+      borderWidth: 1,
+      borderColor: buttonBackground,
+    },
   });
