@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, FlatList, SafeAreaView, ActivityIndicator, TouchableHighlight, Modal, TouchableOpacity, Menu } from 'react-native';
+import { View, FlatList, SafeAreaView, ActivityIndicator, TouchableHighlight, Modal, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useLayoutEffect } from "react";
 import { styles } from "../Styles";
 import * as FileSystem from 'expo-file-system';
@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import uuid from 'react-native-uuid';
 import * as Sharing from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+import {compareStreams} from "expo-camera/build/WebCameraUtils";
 
 
 export default GalerieScreen = ({route, navigation}) => {
@@ -24,7 +25,7 @@ export default GalerieScreen = ({route, navigation}) => {
   }, [navigation])
 
 
-  getAllFilesInDirectory = async() => {
+  const getAllFilesInDirectory = async() => {
     let dir = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'gallery/');
     let sorted = dir.sort().reverse()
     let temp = []
@@ -38,25 +39,31 @@ export default GalerieScreen = ({route, navigation}) => {
   }
   module.exports.getAllFilesInDirectory = getAllFilesInDirectory;
 
-  deleteAllFilesInDirectory = async() => {
+  const deleteAllFilesInDirectory = async () => {
     let dir = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory + 'gallery/');
- 
+
     dir.forEach((val) => {
       FileSystem.deleteAsync(
-        FileSystem.documentDirectory + 'gallery/' + val,
+        FileSystem.documentDirectory + 'gallery/' + val
+      ).then(() => {
         console.log("deleting: " + val)
-      )
+      }).catch((e) => {
+        console.error(e)
+      })
     });
     setimageKeyList([]);
   }
 
-  deleteSingleFileInDirectory = async(image) => {
+  const deleteSingleFileInDirectory = async(image) => {
     const filename = image.split('/')[(image.split('/')).length - 1]
 
     FileSystem.deleteAsync(
-      FileSystem.documentDirectory + 'gallery/' + filename,
-      console.log("deleting: " + filename),
-    )
+      FileSystem.documentDirectory + 'gallery/' + filename
+    ).then(() => {
+      console.log("deleting: " + filename)
+    }).catch((e) => {
+      console.error(e)
+    })
     await getAllFilesInDirectory()
     //setselectedImage({})
     setModalVisible(false)
@@ -118,7 +125,7 @@ export default GalerieScreen = ({route, navigation}) => {
 
 
   const Item = ({item}) => (
-    <TouchableHighlight 
+    <TouchableHighlight
       onPress={() => {setModalVisible(true); setselectedImage(item)}}
       style={{
         flex: 1,
@@ -126,7 +133,7 @@ export default GalerieScreen = ({route, navigation}) => {
     >
       <Image
       source={{uri: item.image}}
-      containerStyle={{  
+      containerStyle={{
         aspectRatio: 1,
         width: '100%',
         flex: 1,
@@ -226,21 +233,21 @@ export default GalerieScreen = ({route, navigation}) => {
       <SafeAreaView>
         <FlatList
         data={imageKeyList}
-        style={{  
-          width: '100%', 
-          borderTopLeftRadius: 15, 
+        style={{
+          width: '100%',
+          borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
           backgroundColor: styles.buttonBackground,
           height: "100%"
         }}
         numColumns={2}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Item item={item} /> 
-      
+        renderItem={({ item }) => <Item item={item} />
+
         }
         />
     </SafeAreaView>
-          
+
       </View>
 
       <View style={styles.headerSpace}>
